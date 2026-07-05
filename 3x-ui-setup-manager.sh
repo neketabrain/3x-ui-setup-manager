@@ -27,6 +27,14 @@ ColorGray() {
 	echo -ne "${GRAY}${1}${NO_COLOR}"
 }
 
+confirm_action() {
+    read -p "$1 (y/n): " response
+    case "$response" in
+        [Yy][Ee][Ss]|[Yy]) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
 function press_any_key() {
     echo ""
 	read -n 1 -s -r -p "$(ColorGray 'Нажмите любую кнопку, чтобы продолжить...')"
@@ -126,7 +134,9 @@ function install_docker() {
 			return 1
 		fi
 
-		set_rootless_access
+		if confirm_action "Настроить rootless-режим для Docker?"; then
+    		set_rootless_access
+		fi
 
     	echo ""
 		echo "Финальная проверка..."
