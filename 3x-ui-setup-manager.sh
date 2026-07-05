@@ -90,10 +90,10 @@ function install_docker() {
 function install_3xui() {
     echo ""
 	mkdir -p $BASE_PATH/{3x-ui,caddy/templates}
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/refs/heads/main/configs/docker-compose.yml | envsubst > $DOCKER_COMPOSE_PATH
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/refs/heads/main/configs/Caddyfile | envsubst > $CADDYFILE_PATH
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/refs/heads/main/configs/caddy.env | envsubst > $CADDY_ENV_PATH
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/refs/heads/main/configs/index.html | envsubst > $BASE_PATH/caddy/templates/index.html
+	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/docker-compose.yml | envsubst > $DOCKER_COMPOSE_PATH
+	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/Caddyfile | envsubst > $CADDYFILE_PATH
+	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/caddy.env | envsubst > $CADDY_ENV_PATH
+	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/index.html | envsubst > $BASE_PATH/caddy/templates/index.html
     
 	set_domain
 
