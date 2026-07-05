@@ -156,7 +156,7 @@ function set_domain() {
     echo -ne "$(ColorBlue 'Введите ваш домен (example.com):') "
 	read new_domain
 
-	if output=$(sed -i'' -e "s/^USER_DOMAIN=.*/USER_DOMAIN=${new_domain}/" $CADDY_ENV_PATH 2>&1); then
+	if output=$(sed -i'' -e "s|^USER_DOMAIN=.*|USER_DOMAIN=${new_domain}|" $CADDY_ENV_PATH 2>&1); then
     	echo "Домен $(ColorBlue $new_domain) установлен"
 	else
 		echo -e "${RED}${output}${NO_COLOR}"
@@ -168,7 +168,7 @@ function set_sub_path() {
     echo -ne "$(ColorBlue 'Введите путь до подписок (/sub-secret-path):') "
 	read new_path
 
-	if output=$(sed -i'' -e "s/^USER_SUB_PATH=.*/USER_SUB_PATH=${new_path}/" $CADDY_ENV_PATH 2>&1); then
+	if output=$(sed -i'' -e "s|^USER_SUB_PATH=.*|USER_SUB_PATH=${new_path}|" $CADDY_ENV_PATH 2>&1); then
     	echo "Путь до подписок $(ColorBlue $new_path) установлен"
 	else
 		echo -e "${RED}${output}${NO_COLOR}"
