@@ -116,8 +116,12 @@ function set_rootless_access() {
 		sudo groupadd docker
 	fi
 
-	sudo usermod -aG docker $USER
-	newgrp docker
+	sudo usermod -aG docker $USER || true
+
+	if confirm_action "Требуется перезапустить сессию в терминале, чтобы изменения вступили в силу. Сделать это сейчас?"; then
+		echo "$(ColorGreen 'Rootless-режим для Docker установлен')"
+		newgrp docker
+	fi
 
 	echo "$(ColorGreen 'Rootless-режим для Docker установлен')"
 }
@@ -134,19 +138,16 @@ function install_docker() {
 			return 1
 		fi
 
-		if confirm_action "Настроить rootless-режим для Docker?"; then
-    		set_rootless_access
-		fi
-
-    	echo ""
-		echo "Финальная проверка..."
-
 		if ! output2=$(docker --version 2>&1); then
 			echo -e "${RED}${output2}${NO_COLOR}"
 			return 1
 		fi
 
 		echo "$(ColorGreen 'Готово! Docker установлен')"
+
+		if confirm_action "Настроить rootless-режим для Docker?"; then
+    		set_rootless_access
+		fi
 	fi
 }
 
