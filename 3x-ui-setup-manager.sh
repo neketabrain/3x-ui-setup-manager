@@ -193,6 +193,10 @@ function install_3xui() {
 
 	echo ""
 	echo -e "${GREEN}Готово! Панель 3X-UI установлена и доступна по адресу ${DOMAIN}:8443/${NO_COLOR}"
+	echo -ne "
+Логин:  ${BLUE}admin${NO_COLOR}
+Пароль: ${BLUE}admin${NO_COLOR}"
+	echo ""
 }
 
 function menu() {
