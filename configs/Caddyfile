@@ -22,7 +22,7 @@
     auto_https disable_redirects
 }
 
-https://example.com {
+https://{$USER_DOMAIN} {
     bind 127.0.0.1
     root * /srv
     encode gzip zstd
@@ -34,16 +34,16 @@ https://example.com {
     }
 }
 
-http://example.com {
+http://{$USER_DOMAIN} {
     bind 0.0.0.0
-    redir https://example.com{uri} permanent
+    redir https://{$USER_DOMAIN}{uri} permanent
 }
 
-https://example.com:8443 {
+https://{$USER_DOMAIN}:8443 {
     bind 0.0.0.0
     encode gzip zstd
 
-    handle /sub* {
+    handle {$USER_SUB_PATH}* {
         reverse_proxy 127.0.0.1:2096 {
             header_up X-Real-IP {remote_host}
         }
