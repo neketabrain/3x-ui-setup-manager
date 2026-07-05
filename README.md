@@ -32,11 +32,11 @@
 Подключитесь по **SSH** к серверу и выполните команду:
 
 ```sh
-sh <(wget -O - https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/3x-ui-setup-manager.sh)
+bash <(wget -O - https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/3x-ui-setup-manager.sh)
 ```
 
 или
 
 ```sh
-wget -O /tmp/3x-ui-setup-manager.sh https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/3x-ui-setup-manager.sh && sh /tmp/3x-ui-setup-manager.sh
+wget -O /tmp/3x-ui-setup-manager.sh https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/3x-ui-setup-manager.sh && bash /tmp/3x-ui-setup-manager.sh
 ```

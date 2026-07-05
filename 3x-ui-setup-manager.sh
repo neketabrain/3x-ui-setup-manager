@@ -3,7 +3,7 @@
 # 3X-UI Setup Manager by neketabrain
 # =========================================
 
-BASE_PATH="./opt/3x-ui-setup"
+BASE_PATH="/opt/3x-ui-setup"
 DOCKER_COMPOSE_PATH="$BASE_PATH/docker-compose.yml"
 CADDYFILE_PATH="$BASE_PATH/caddy/Caddyfile"
 CADDY_ENV_PATH="$BASE_PATH/caddy.env"
@@ -66,19 +66,23 @@ function install_docker() {
 	else
 		echo "Устанавливаю Docker..."
 
-		if ! output1=$(bash <(wget -qO- https://get.docker.com) @ -o get-docker.sh || true 2>&1); then
+		if ! output1=$(bash <(wget -qO- https://get.docker.com) @ -o get-docker.sh 2>&1); then
 			echo -e "${RED}${output1}${NO_COLOR}"
 			return 1
 		fi
 
 		echo "Настраиваю доступ к Docker без root прав..."
-		sudo groupadd docker
+
+		if ! getent group docker > /dev/null 2>&1; then
+			sudo groupadd docker
+		fi
+
 		sudo usermod -aG docker $USER
 		newgrp docker
 
 		echo "Финальная проверка..."
 
-		if ! output2=$(docker --version || true 2>&1); then
+		if ! output2=$(docker --version 2>&1); then
 			echo -e "${RED}${output2}${NO_COLOR}"
 			return 1
 		fi
@@ -88,12 +92,11 @@ function install_docker() {
 }
 
 function install_3xui() {
-    echo ""
 	mkdir -p $BASE_PATH/{3x-ui,caddy/templates}
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/docker-compose.yml | envsubst > $DOCKER_COMPOSE_PATH
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/Caddyfile | envsubst > $CADDYFILE_PATH
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/caddy.env | envsubst > $CADDY_ENV_PATH
-	wget -qO- https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/index.html | envsubst > $BASE_PATH/caddy/templates/index.html
+	wget -qO $DOCKER_COMPOSE_PATH https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/docker-compose.yml
+	wget -qO $CADDYFILE_PATH https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/Caddyfile
+	wget -qO $CADDY_ENV_PATH https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/caddy.env
+	wget -qO $BASE_PATH/caddy/templates/index.html https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/index.html
     
 	set_domain
 
