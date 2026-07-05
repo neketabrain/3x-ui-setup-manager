@@ -179,7 +179,9 @@ function install_3xui() {
 	echo ""
 	echo "Загружаю необходимые файлы..."
 
+	rm -rf $BASE_PATH
 	mkdir -p $BASE_PATH/{3x-ui,caddy/templates}
+
 	wget -qO $DOCKER_COMPOSE_PATH https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/docker-compose.yml
 	wget -qO $CADDYFILE_PATH https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/Caddyfile
 	wget -qO $CADDY_ENV_PATH https://raw.githubusercontent.com/neketabrain/3x-ui-setup-manager/main/configs/caddy.env
@@ -203,14 +205,14 @@ function menu() {
 	echo -ne "
 \033[1m3X-UI Setup Manager\033[0m
 
-$(ColorGreen '1)') Установить и настроить 3X-UI
-$(ColorGreen '2)') Обновить 3X-UI
-$(ColorGreen '3)') Изменить домен
-$(ColorGreen '4)') Изменить путь до подписок
-$(ColorGreen '5)') Перезапустить контейнер
-$(ColorGreen '6)') Запустить контейнер
-$(ColorGreen '7)') Остановить контейнер
-$(ColorGreen '8)') Установить Docker
+$(ColorGreen '1)') Установить Docker
+$(ColorGreen '2)') Установить и настроить 3X-UI
+$(ColorGreen '3)') Обновить 3X-UI
+$(ColorGreen '4)') Изменить домен
+$(ColorGreen '5)') Изменить путь до подписок
+$(ColorGreen '6)') Перезапустить контейнер
+$(ColorGreen '7)') Запустить контейнер
+$(ColorGreen '8)') Остановить контейнер
 $(ColorGreen '9)') Настроить rootless-режим для Docker
 $(ColorGreen '0)') Выход
 
@@ -218,14 +220,14 @@ $(ColorBlue 'Выберите пункт меню:') "
     
 	read a
     case $a in
-		1) install_3xui ; press_any_key ; menu ;;
-		2) upgrade_container ; press_any_key ; menu ;;
-		3) set_domain ; press_any_key ; menu ;;
-		4) set_sub_path ; press_any_key ; menu ;;
-		5) restart_container ; press_any_key ; menu ;;
-		6) start_container ; press_any_key ; menu ;;
-		7) stop_container ; press_any_key ; menu ;;
-		8) install_docker ; press_any_key ; menu ;;
+		1) install_docker ; press_any_key ; menu ;;
+		2) install_3xui ; press_any_key ; menu ;;
+		3) upgrade_container ; press_any_key ; menu ;;
+		4) set_domain ; press_any_key ; menu ;;
+		5) set_sub_path ; press_any_key ; menu ;;
+		6) restart_container ; press_any_key ; menu ;;
+		7) start_container ; press_any_key ; menu ;;
+		8) stop_container ; press_any_key ; menu ;;
 		9) set_rootless_access ; press_any_key ; menu ;;
 		0) exit 0 ;;
 		*) echo -e "$(ColorRed 'Такого пункта меню не существует')" ; press_any_key ; menu ;;
